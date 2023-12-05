@@ -28,15 +28,19 @@ public class Member extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<MemberRole> authorities;
+    private List<MemberRole> roles;
 
-    private Member(String email, String password, String name) {
+    @Column(nullable = false)
+    private Boolean enable;
+
+    private Member(String email, String password, String name, Boolean enable) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.enable = enable;
     }
 
-    public static Member create(String email, String password, String name) {
-        return new Member(email, password, name);
+    public static Member create(String email, String password, String name, Boolean enable) {
+        return new Member(email, password, name, enable);
     }
 }
