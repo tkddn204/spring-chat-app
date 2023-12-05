@@ -7,5 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MemberAuthTokenRepository extends JpaRepository<MemberAuthToken, Long> {
+
+    void deleteByMemberId(Long memberId);
     List<MemberAuthToken> findAllByExpiredAtIsAfter(LocalDateTime date);
 }

@@ -15,18 +15,13 @@ import java.util.Date;
 
 @Component
 public class JwtProvider {
+    private static final String JWT_ISSUER = "chat-app";
     private static final String CLIENT_ID_KEY = "client_id";
     private static final String CLIENT_EMAIL_KEY = "client_email";
 
-    private final String issuer;
-
     private final SecretKey secretKey;
 
-    public JwtProvider(
-            @Value("${spring.application.name}") String issuer,
-            @Value("${service.jwt.secret-key}") String secretKey
-    ) {
-        this.issuer = issuer;
+    public JwtProvider(@Value("${service.jwt.secret-key}") String secretKey) {
         this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
     }
 
@@ -34,14 +29,14 @@ public class JwtProvider {
         return Jwts.builder()
                 .claim(CLIENT_ID_KEY, jwtPayload.id())
                 .claim(CLIENT_EMAIL_KEY, jwtPayload.email())
-                .issuer(issuer)
+                .issuer(JWT_ISSUER)
                 .issuedAt(jwtPayload.issuedAt())
                 .expiration(new Date(jwtPayload.issuedAt().getTime() + expiration))
                 .signWith(secretKey)
                 .compact();
     }
 
-    private JwtPayload verifyToken(String jwtToken, boolean isStrict) {
+    public JwtPayload verifyToken(String jwtToken, boolean isStrict) {
         try {
             Claims claims = Jwts.parser()
                     .verifyWith(secretKey)
