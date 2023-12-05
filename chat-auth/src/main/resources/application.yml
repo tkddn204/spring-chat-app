@@ -6,6 +6,7 @@ spring:
       client:
         registration:
           google:
+            redirect-uri: ${AUTH_GOOGLE_CLIENT_REDIRECT_URI}
             client-id: ${AUTH_GOOGLE_CLIENT_ID}
             client-secret: ${AUTH_GOOGLE_CLIENT_SECRET}
             scope:
