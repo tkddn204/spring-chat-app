@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public class MemberAuthority {
 
     @EmbeddedId
-    private MemberAuthorityId memberAuthorityId = new MemberAuthorityId();
+    private MemberAuthorityId memberAuthorityId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", insertable = false, updatable = false)
@@ -20,6 +20,7 @@ public class MemberAuthority {
     private Authority authority;
 
     private MemberAuthority(Member member, Authority authority) {
+        this.memberAuthorityId = MemberAuthorityId.create(member.getId(), authority.getId());
         this.member = member;
         this.authority = authority;
     }

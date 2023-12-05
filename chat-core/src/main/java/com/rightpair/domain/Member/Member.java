@@ -27,7 +27,7 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<MemberAuthority> authorities;
 
     private Member(String email, String password, String name) {
