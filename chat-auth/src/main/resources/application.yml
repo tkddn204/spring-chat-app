@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    include: core
   security:
     oauth2:
       client:

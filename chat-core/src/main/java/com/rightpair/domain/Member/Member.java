@@ -31,16 +31,16 @@ public class Member extends BaseEntity {
     private List<MemberRole> roles;
 
     @Column(nullable = false)
-    private Boolean enable;
+    private Boolean enabled;
 
-    private Member(String email, String password, String name, Boolean enable) {
+    private Member(String email, String password, String name, Boolean enabled) {
         this.email = email;
         this.password = password;
         this.name = name;
-        this.enable = enable;
+        this.enabled = enabled;
     }
 
-    public static Member create(String email, String password, String name, Boolean enable) {
-        return new Member(email, password, name, enable);
+    public static Member create(String email, String password, String name, Boolean enabled) {
+        return new Member(email, password, name, enabled);
     }
 }
