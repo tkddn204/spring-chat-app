@@ -1,6 +1,6 @@
 package com.rightpair.repository;
 
-import com.rightpair.domain.Member;
+import com.rightpair.domain.Member.Member;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

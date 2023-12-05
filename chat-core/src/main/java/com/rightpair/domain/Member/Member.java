@@ -1,10 +1,13 @@
-package com.rightpair.domain;
+package com.rightpair.domain.Member;
 
 
+import com.rightpair.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Member extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -23,6 +26,9 @@ public class Member extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private List<MemberAuthority> authorities;
 
     private Member(String email, String password, String name) {
         this.email = email;
