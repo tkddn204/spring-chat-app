@@ -1,5 +1,5 @@
 package com.rightpair.type;
 
-public enum AuthorityType {
+public enum RoleType {
     ANONYMOUS, USER, ADMIN
 }

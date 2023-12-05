@@ -9,19 +9,19 @@ import java.io.Serializable;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberAuthorityId implements Serializable {
+public class MemberRoleId implements Serializable {
     @Column(name = "member_id", nullable = false)
     private Long memberId;
 
-    @Column(name = "authority_id", nullable = false)
-    private Long authorityId;
+    @Column(name = "role_id", nullable = false)
+    private Long roleId;
 
-    private MemberAuthorityId(Long memberId, Long authorityId) {
+    private MemberRoleId(Long memberId, Long roleId) {
         this.memberId = memberId;
-        this.authorityId = authorityId;
+        this.roleId = roleId;
     }
 
-    public static MemberAuthorityId create(Long memberId, Long authorityId) {
-        return new MemberAuthorityId(memberId, authorityId);
+    public static MemberRoleId create(Long memberId, Long roleId) {
+        return new MemberRoleId(memberId, roleId);
     }
 }

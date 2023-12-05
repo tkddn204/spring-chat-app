@@ -28,7 +28,7 @@ public class Member extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<MemberAuthority> authorities;
+    private List<MemberRole> authorities;
 
     private Member(String email, String password, String name) {
         this.email = email;
