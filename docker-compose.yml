@@ -1,0 +1,30 @@
+# Docker Compose
+
+version: '3'
+
+services:
+  mysql:
+    container_name: chat-app-mysql
+    image: mysql:8.0
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'true'
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      TZ: Asia/Seoul
+    volumes:
+      - ${MYSQL_VOLUME_PATH}:/var/lib/mysql
+    ports:
+      - ${MYSQL_PORT}:3306
+
+  redis:
+    container_name: chat-app-redis
+    image: redis:7.2
+    command: redis-server --port 6379
+    volumes:
+      - ${REDIS_VOLUME_PATH}:/data
+    ports:
+      - ${REDIS_PORT}:6379
