@@ -1,4 +1,4 @@
-package com.rightpair.domain.Member;
+package com.rightpair.domain.member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

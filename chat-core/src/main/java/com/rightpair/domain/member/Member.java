@@ -1,4 +1,4 @@
-package com.rightpair.domain.Member;
+package com.rightpair.domain.member;
 
 
 import com.rightpair.domain.BaseEntity;
@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -33,14 +34,15 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private Boolean enabled;
 
-    private Member(String email, String password, String name, Boolean enabled) {
+    public Member(String email, String password, String name, List<MemberRole> roles, Boolean enabled) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.roles = roles;
         this.enabled = enabled;
     }
 
-    public static Member create(String email, String password, String name, Boolean enabled) {
-        return new Member(email, password, name, enabled);
+    public static Member create(String email, String password, String name) {
+        return new Member(email, password, name, Collections.emptyList(), true);
     }
 }

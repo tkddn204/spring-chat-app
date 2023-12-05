@@ -15,8 +15,8 @@ import java.util.Date;
 
 @Component
 public class JwtProvider {
-    private static final String USER_ID_KEY = "client_id";
-    private static final String USER_EMAIL_KEY = "client_email";
+    private static final String CLIENT_ID_KEY = "client_id";
+    private static final String CLIENT_EMAIL_KEY = "client_email";
 
     private final String issuer;
 
@@ -32,8 +32,8 @@ public class JwtProvider {
 
     public String createToken(JwtPayload jwtPayload, long expiration) {
         return Jwts.builder()
-                .claim(USER_ID_KEY, jwtPayload.id())
-                .claim(USER_EMAIL_KEY, jwtPayload.email())
+                .claim(CLIENT_ID_KEY, jwtPayload.id())
+                .claim(CLIENT_EMAIL_KEY, jwtPayload.email())
                 .issuer(issuer)
                 .issuedAt(jwtPayload.issuedAt())
                 .expiration(new Date(jwtPayload.issuedAt().getTime() + expiration))
@@ -49,14 +49,14 @@ public class JwtProvider {
                     .parseSignedClaims(jwtToken)
                     .getPayload();
             return JwtPayload.fromClaims(
-                    claims.get(USER_ID_KEY, String.class),
-                    claims.get(USER_EMAIL_KEY, String.class),
+                    claims.get(CLIENT_ID_KEY, String.class),
+                    claims.get(CLIENT_EMAIL_KEY, String.class),
                     claims.getIssuedAt());
         } catch (ExpiredJwtException e) {
             if (!isStrict) {
                 return JwtPayload.fromClaims(
-                        e.getClaims().get(USER_ID_KEY, String.class),
-                        e.getClaims().get(USER_EMAIL_KEY, String.class),
+                        e.getClaims().get(CLIENT_ID_KEY, String.class),
+                        e.getClaims().get(CLIENT_EMAIL_KEY, String.class),
                         e.getClaims().getIssuedAt());
             }
             throw new JwtVerifyException(ErrorCode.JWT_EXPIRED_ERROR);

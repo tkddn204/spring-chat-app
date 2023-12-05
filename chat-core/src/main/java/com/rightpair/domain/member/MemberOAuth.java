@@ -1,4 +1,4 @@
-package com.rightpair.domain.Member;
+package com.rightpair.domain.member;
 
 import com.rightpair.type.OauthProvider;
 import jakarta.persistence.*;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberOauth {
+public class MemberOAuth {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,13 +26,13 @@ public class MemberOauth {
     @Column(nullable = false)
     private String providerId;
 
-    private MemberOauth(Member member, OauthProvider provider, String providerId) {
+    private MemberOAuth(Member member, OauthProvider provider, String providerId) {
         this.member = member;
         this.provider = provider;
         this.providerId = providerId;
     }
 
-    public static MemberOauth create(Member member, OauthProvider oauthProvider, String providerId) {
-        return new MemberOauth(member, oauthProvider, providerId);
+    public static MemberOAuth create(Member member, OauthProvider oauthProvider, String providerId) {
+        return new MemberOAuth(member, oauthProvider, providerId);
     }
 }

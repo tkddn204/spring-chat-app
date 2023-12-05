@@ -1,4 +1,4 @@
-package com.rightpair.domain.Member;
+package com.rightpair.domain.member;
 
 import com.rightpair.type.RoleType;
 import jakarta.persistence.*;
