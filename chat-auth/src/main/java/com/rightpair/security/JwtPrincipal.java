@@ -1,7 +1,7 @@
 package com.rightpair.security;
 
-import com.rightpair.domain.member.Member;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@Getter
 @ToString
 @EqualsAndHashCode(callSuper = false)
 public class JwtPrincipal implements UserDetails {
@@ -26,13 +27,8 @@ public class JwtPrincipal implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static JwtPrincipal create(Member member, List<String> roles) {
-        return new JwtPrincipal(
-                String.valueOf(member.getId()),
-                member.getEmail(),
-                member.getEnabled(),
-                AuthorityUtils.createAuthorityList(roles)
-        );
+    public static JwtPrincipal from(String memberId, String memberEmail, boolean enabled, List<String> roles) {
+        return new JwtPrincipal(memberId, memberEmail, enabled, AuthorityUtils.createAuthorityList(roles));
     }
 
     @Override

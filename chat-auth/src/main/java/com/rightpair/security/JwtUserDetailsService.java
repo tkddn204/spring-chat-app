@@ -17,6 +17,10 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         GetMemberResponse memberResponse = authService.getMemberByEmail(email);
-        return JwtPrincipal.create(memberResponse.member(), memberResponse.roles());
+        return JwtPrincipal.from(
+                memberResponse.id(),
+                memberResponse.email(),
+                memberResponse.enabled(),
+                memberResponse.roles());
     }
 }

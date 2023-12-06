@@ -1,0 +1,9 @@
+### 회원가입
+POST http://localhost:8080/v1/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "test1234",
+  "name": "testname"
+}

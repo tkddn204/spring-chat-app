@@ -1,0 +1,8 @@
+### 회원 인증
+POST http://localhost:8080/v1/auth/authenticate
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "test1234"
+}

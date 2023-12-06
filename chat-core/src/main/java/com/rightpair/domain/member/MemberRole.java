@@ -13,12 +13,12 @@ public class MemberRole {
     @EmbeddedId
     private MemberRoleId memberRoleId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @MapsId("memberId")
     private Member member;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @MapsId("roleId")
     private Role role;
 
     private MemberRole(Member member, Role role) {
