@@ -1,6 +1,7 @@
 package com.rightpair.service;
 
 import com.rightpair.domain.member.Member;
+import com.rightpair.domain.member.MemberAuthToken;
 import com.rightpair.domain.member.MemberRole;
 import com.rightpair.domain.member.Role;
 import com.rightpair.dto.*;
@@ -8,6 +9,7 @@ import com.rightpair.exception.MemberAlreadyExistedException;
 import com.rightpair.exception.MemberNotFoundException;
 import com.rightpair.exception.MemberWrongPasswordException;
 import com.rightpair.exception.RoleNotFoundException;
+import com.rightpair.jwt.JwtPair;
 import com.rightpair.jwt.dto.JwtPayload;
 import com.rightpair.jwt.service.JwtService;
 import com.rightpair.repository.MemberAuthTokenRepository;
@@ -20,6 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -41,9 +45,7 @@ public class AuthService {
             throw new MemberWrongPasswordException();
         }
 
-        return AuthenticateMemberResponse.fromJwtPair(
-                jwtService.createTokenPair(JwtPayload.from(
-                        String.valueOf(storedMember.getId()), storedMember.getEmail())));
+        return AuthenticateMemberResponse.fromJwtPair(createJwtPairAndSaveRefreshToken(storedMember));
     }
 
     @Transactional
@@ -58,9 +60,15 @@ public class AuthService {
         Role role = roleRepository.findByRoleType(RoleType.USER).orElseThrow(RoleNotFoundException::new);
         memberRoleRepository.save(MemberRole.create(savedMember, role));
 
-        return RegisterMemberResponse.fromJwtPair(
-                jwtService.createTokenPair(JwtPayload.from(
-                        String.valueOf(savedMember.getId()), savedMember.getEmail())));
+        return RegisterMemberResponse.fromJwtPair(createJwtPairAndSaveRefreshToken(savedMember));
+    }
+
+    public JwtPair createJwtPairAndSaveRefreshToken(Member member) {
+        JwtPair jwtPair = jwtService.createTokenPair(
+                JwtPayload.from(String.valueOf(member.getId()), member.getEmail()));
+        memberAuthTokenRepository.save(MemberAuthToken.create(member, jwtPair.refreshToken(),
+                LocalDateTime.now().plus(jwtService.getRefreshExpiration(), ChronoUnit.MILLIS)));
+        return jwtPair;
     }
 
     @Transactional
