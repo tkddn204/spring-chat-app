@@ -2,8 +2,10 @@ package com.rightpair.domain.member;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberRole {
@@ -15,7 +17,7 @@ public class MemberRole {
     @JoinColumn(name = "member_id", insertable = false, updatable = false)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "role_id", insertable = false, updatable = false)
     private Role role;
 

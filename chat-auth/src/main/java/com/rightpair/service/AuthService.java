@@ -1,10 +1,8 @@
 package com.rightpair.service;
 
 import com.rightpair.domain.member.Member;
-import com.rightpair.dto.AuthenticateMemberRequest;
-import com.rightpair.dto.AuthenticateMemberResponse;
-import com.rightpair.dto.RegisterMemberRequest;
-import com.rightpair.dto.RegisterMemberResponse;
+import com.rightpair.domain.member.MemberRole;
+import com.rightpair.dto.*;
 import com.rightpair.exception.MemberAlreadyExistedException;
 import com.rightpair.exception.MemberNotFoundException;
 import com.rightpair.exception.MemberWrongPasswordException;
@@ -12,16 +10,20 @@ import com.rightpair.jwt.dto.JwtPayload;
 import com.rightpair.jwt.service.JwtService;
 import com.rightpair.repository.MemberAuthTokenRepository;
 import com.rightpair.repository.MemberRepository;
+import com.rightpair.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class AuthService {
     private final MemberAuthTokenRepository memberAuthTokenRepository;
     private final MemberRepository memberRepository;
+    private final RoleRepository roleRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
@@ -56,5 +58,16 @@ public class AuthService {
     @Transactional
     public void unAuthenticateMember(Long memberId) {
         memberAuthTokenRepository.deleteByMemberId(memberId);
+    }
+
+    @Transactional(readOnly = true)
+    public GetMemberResponse getMemberByEmail(String email) {
+        Member storedMember = memberRepository.findByEmail(email)
+                .orElseThrow(MemberNotFoundException::new);
+
+        List<MemberRole> memberRoles = roleRepository.findAllByMemberId(storedMember.getId());
+        List<String> roles = memberRoles.stream().map(memberRole -> memberRole.getRole().getRoleType().name()).toList();
+
+        return new GetMemberResponse(storedMember, roles);
     }
 }
