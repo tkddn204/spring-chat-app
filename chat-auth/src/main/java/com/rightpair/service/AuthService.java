@@ -85,4 +85,13 @@ public class AuthService {
 
         return GetMemberResponse.create(storedMember, roles);
     }
+
+    @Transactional
+    public AuthenticateMemberResponse refreshAccessToken(String refreshToken) {
+        JwtPayload jwtPayload = jwtService.verifyRefreshToken(refreshToken);
+
+        memberAuthTokenRepository.findByMemberId(Long.valueOf(jwtPayload.id()));
+
+        return AuthenticateMemberResponse.fromJwtPair(jwtService.refreshAccessToken(refreshToken, jwtPayload));
+    }
 }

@@ -3,10 +3,10 @@ package com.rightpair.exception;
 import lombok.Getter;
 
 @Getter
-public class JwtVerifyException extends RuntimeException {
+public class JwtVerifyException extends BusinessException {
     private final ErrorCode errorCode;
     public JwtVerifyException(ErrorCode errorCode) {
-        super(errorCode.getMessage());
+        super(errorCode);
         this.errorCode = errorCode;
     }
 }

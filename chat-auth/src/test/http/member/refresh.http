@@ -1,0 +1,8 @@
+### 회원 액세스 토큰 리프레시
+POST http://localhost:8080/v1/auth/refresh
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJjbGllbnRfaWQiOiIxIiwiY2xpZW50X2VtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlzcyI6ImNoYXQtYXBwIiwiaWF0IjoxNzAxODU3NTQxLCJleHAiOjE3MDE4OTM1NDF9.zuB5K72mB8EM8sWoXIMqur-FyC0_fhW-M0uIc6a8WkeBaUgAg9qV8SMie_pCTm2EBJEkRQ6yiRmiCdNCrRXJvw
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzUxMiJ9.eyJjbGllbnRfaWQiOiIxIiwiY2xpZW50X2VtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlzcyI6ImNoYXQtYXBwIiwiaWF0IjoxNzAxODU3NTQxLCJleHAiOjE3MDI3MjE1NDF9.Px5RgiWk5QEh0OCkUlp9Oi0XcIxABmOPvEkl1OQXjUgDMS95z2p6s-XosWsfw7IIT-qxXJKV9Lp4-8gHTSwqrQ"
+}

@@ -3,7 +3,7 @@ package com.rightpair.util;
 import java.util.regex.Pattern;
 
 public class JwtUtil {
-    private static final String JWT_REGEX = "^([a-zA-Z0-9_=]+)\\.([a-zA-Z0-9_=]+)\\.([a-zA-Z0-9_\\-\\+\\/=]*)";
+    public static final String JWT_REGEX = "^([a-zA-Z0-9_=]+)\\.([a-zA-Z0-9_=]+)\\.([a-zA-Z0-9_\\-\\+\\/=]*)";
     private static final String JWT_TOKEN_PREFIX = "Bearer ";
 
     public static String extractAccessToken(String authHeaderValue) {
