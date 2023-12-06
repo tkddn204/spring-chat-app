@@ -28,7 +28,7 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<MemberRole> roles;
 
     @Column(nullable = false)
