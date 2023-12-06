@@ -1,0 +1,3 @@
+### 회원 로그아웃
+POST http://localhost:8080/v1/auth/signout
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJjbGllbnRfaWQiOiIxIiwiY2xpZW50X2VtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlzcyI6ImNoYXQtYXBwIiwiaWF0IjoxNzAxODU2MjQ1LCJleHAiOjE3MDE4OTIyNDV9.2N9DVTqQseUQiRZ-IkZqDFTzqY9wazewBa1nsSIeURc6dEa6753b0wjW2MC7dZivbVPH2csRIdvpK8vy3XEHcQ

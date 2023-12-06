@@ -3,6 +3,7 @@ package com.rightpair.jwt.service;
 import com.rightpair.jwt.JwtPair;
 import com.rightpair.jwt.JwtProvider;
 import com.rightpair.jwt.dto.JwtPayload;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public class JwtService {
     @Value("${service.jwt.access-expiration}")
     private Long accessExpiration;
 
+    @Getter
     @Value("${service.jwt.refresh-expiration}")
     private Long refreshExpiration;
 

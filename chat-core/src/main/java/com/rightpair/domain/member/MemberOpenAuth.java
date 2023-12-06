@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberOAuth {
+public class MemberOpenAuth {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,13 +26,17 @@ public class MemberOAuth {
     @Column(nullable = false)
     private String providerId;
 
-    private MemberOAuth(Member member, OauthProvider provider, String providerId) {
+    private MemberOpenAuth(Member member, OauthProvider provider, String providerId) {
         this.member = member;
         this.provider = provider;
         this.providerId = providerId;
     }
 
-    public static MemberOAuth create(Member member, OauthProvider oauthProvider, String providerId) {
-        return new MemberOAuth(member, oauthProvider, providerId);
+    public static MemberOpenAuth create(Member member, OauthProvider oauthProvider, String providerId) {
+        return new MemberOpenAuth(member, oauthProvider, providerId);
+    }
+
+    public void updateProviderId(String providerId) {
+        this.providerId = providerId;
     }
 }

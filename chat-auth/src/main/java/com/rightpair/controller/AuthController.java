@@ -1,6 +1,7 @@
 package com.rightpair.controller;
 
 import com.rightpair.controller.request.AuthenticateMemberControllerRequest;
+import com.rightpair.controller.request.RefreshAccessTokenControllerRequest;
 import com.rightpair.controller.request.RegisterMemberControllerRequest;
 import com.rightpair.dto.*;
 import com.rightpair.resolver.AuthContext;
@@ -53,6 +54,15 @@ public class AuthController {
     ) {
         return ResponseEntity.ok(
                 authService.getMemberByEmail(jwtPrincipal.getMemberEmail())
+        );
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthenticateMemberResponse> refreshAccessToken(
+            @Valid @RequestBody RefreshAccessTokenControllerRequest controllerRequest
+    ) {
+        return ResponseEntity.ok(
+                authService.refreshAccessToken(controllerRequest.refreshToken())
         );
     }
 }

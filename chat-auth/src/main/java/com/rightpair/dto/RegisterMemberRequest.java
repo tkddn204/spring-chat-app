@@ -2,7 +2,7 @@ package com.rightpair.dto;
 
 import com.rightpair.controller.request.RegisterMemberControllerRequest;
 
-public record RegisterMemberRequest (
+public record RegisterMemberRequest(
         String email,
         String password,
         String name
