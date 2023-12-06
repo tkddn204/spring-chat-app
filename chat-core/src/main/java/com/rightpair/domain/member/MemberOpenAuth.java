@@ -35,4 +35,8 @@ public class MemberOpenAuth {
     public static MemberOpenAuth create(Member member, OauthProvider oauthProvider, String providerId) {
         return new MemberOpenAuth(member, oauthProvider, providerId);
     }
+
+    public void updateProviderId(String providerId) {
+        this.providerId = providerId;
+    }
 }

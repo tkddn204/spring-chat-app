@@ -11,13 +11,13 @@ public record GetMemberResponse(
         boolean enabled,
         List<String> roles
 ) {
-    public static GetMemberResponse create(Member member, List<String> roles) {
+    public static GetMemberResponse create(Member member) {
         return new GetMemberResponse(
                 String.valueOf(member.getId()),
                 member.getEmail(),
                 member.getName(),
                 member.getEnabled(),
-                roles
+                member.getRolesToStrList()
         );
     }
 }

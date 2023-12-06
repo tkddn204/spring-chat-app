@@ -45,4 +45,11 @@ public class Member extends BaseEntity {
     public static Member create(String email, String password, String name) {
         return new Member(email, password, name, Collections.emptyList(), true);
     }
+
+    public List<String> getRolesToStrList() {
+        if (this.roles == null) {
+            return Collections.emptyList();
+        }
+        return this.roles.stream().map(memberRole -> memberRole.getRole().getRoleType().name()).toList();
+    }
 }
