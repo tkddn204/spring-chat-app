@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rightpair.domain.member.Member;
 import com.rightpair.exception.MemberNotFoundException;
 import com.rightpair.jwt.JwtPair;
-import com.rightpair.repository.MemberRepository;
+import com.rightpair.repository.member.MemberRepository;
 import com.rightpair.security.JwtPrincipal;
 import com.rightpair.service.AuthService;
 import jakarta.servlet.ServletException;

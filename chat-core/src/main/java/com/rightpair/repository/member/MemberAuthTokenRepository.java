@@ -1,4 +1,4 @@
-package com.rightpair.repository;
+package com.rightpair.repository.member;
 
 import com.rightpair.domain.member.MemberAuthToken;
 import org.springframework.data.jpa.repository.JpaRepository;

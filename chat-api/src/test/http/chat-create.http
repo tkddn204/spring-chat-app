@@ -1,0 +1,8 @@
+### 채팅방 만들기
+POST http://localhost:8080/v1/chat/room
+Authorization: Bearer <your-access-token>
+Content-Type: application/json
+
+{
+  "roomName": "채팅방1"
+}

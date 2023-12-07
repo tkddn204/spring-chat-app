@@ -1,0 +1,4 @@
+### 채팅방 들어가기
+GET http://localhost:8080/v1/chat/room/enter/97b7de18-80e5-45e7-9727-91e6e80d6b05
+Authorization: Bearer <your-access-token>
+Content-Type: application/json
