@@ -5,6 +5,7 @@ import com.rightpair.domain.chat.ChatRoom;
 import com.rightpair.dto.ChatRoomListResponse;
 import com.rightpair.exception.ChatRoomAlreadyExistedException;
 import com.rightpair.exception.ChatRoomNotFoundException;
+import com.rightpair.pubsub.ChatRoomSubscriber;
 import com.rightpair.repository.chat.ChatRoomRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ChatRoomService {
 
     private final ChatRoomRedisRepository chatRoomRedisRepository;
+    private final ChatRoomSubscriber chatRoomSubscriber;
 
     public ChatRoom createChatRoom(String leaderMemberId, String leaderMemberName, String roomName) {
         ChatMember leaderChatMember = ChatMember.create(leaderMemberId, leaderMemberName);
@@ -49,5 +51,6 @@ public class ChatRoomService {
 
         chatRoom.members().add(chatMember);
         chatRoomRedisRepository.save(chatRoom);
+        chatRoomRedisRepository.addChatMessageListener(chatRoomSubscriber);
     }
 }

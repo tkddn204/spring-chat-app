@@ -16,6 +16,6 @@ public record ChatRoom(
     public static ChatRoom create(String roomName, ChatMember leader) {
         String randomRoomId = UUID.randomUUID().toString();
         return new ChatRoom(randomRoomId, roomName, leader,
-                List.of(leader), Collections.emptyList(), System.currentTimeMillis());
+                Collections.emptyList(), Collections.emptyList(), System.currentTimeMillis());
     }
 }

@@ -5,7 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rightpair.domain.chat.ChatRoom;
 import com.rightpair.repository.RedisRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.connection.MessageListener;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
+import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,8 +21,10 @@ import java.util.Optional;
 public class ChatRoomRedisRepository implements RedisRepository<ChatRoom> {
 
     private final static String KEY_PREFIX = "chat:room:";
-    private final RedisTemplate<String, String> redisTemplate;
+    private final StringRedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
+    private final RedisMessageListenerContainer redisMessageListenerContainer;
+    private final ChannelTopic channelTopic;
 
     @Override
     public void save(ChatRoom entity) {
@@ -60,5 +66,9 @@ public class ChatRoomRedisRepository implements RedisRepository<ChatRoom> {
     @Override
     public Boolean deleteByKey(String key) {
         return redisTemplate.delete(KEY_PREFIX + key);
+    }
+
+    public void addChatMessageListener(MessageListener messageListener) {
+        redisMessageListenerContainer.addMessageListener(new MessageListenerAdapter(messageListener), channelTopic);
     }
 }

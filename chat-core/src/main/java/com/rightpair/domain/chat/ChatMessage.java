@@ -4,6 +4,8 @@ package com.rightpair.domain.chat;
 import com.rightpair.type.MessageType;
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
 public class ChatMessage {
     private final String messageId;
@@ -22,7 +24,13 @@ public class ChatMessage {
         this.timestamp = timestamp;
     }
 
-    public static ChatMessage create(String messageId, MessageType messageType, String roomId, ChatMember chatMember, String message, Long timestamp) {
-        return new ChatMessage(messageId, messageType, roomId, chatMember, message, timestamp);
+    public static ChatMessage create(MessageType messageType, String roomId, ChatMember chatMember, String message, Long timestamp) {
+        String randomMessageId = UUID.randomUUID().toString();
+        String exchangeMessage = switch (messageType) {
+            case ENTER -> chatMember.getName() + "님이 입장하셨습니다.";
+            case CONNECTED -> message;
+            case EXIT -> chatMember.getName() + "님이 퇴장하셨습니다.";
+        };
+        return new ChatMessage(randomMessageId, messageType, roomId, chatMember, exchangeMessage, timestamp);
     }
 }

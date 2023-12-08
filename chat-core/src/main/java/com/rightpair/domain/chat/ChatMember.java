@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public class ChatMember {
-    String id;
-    String name;
+    private final String id;
+    private final String name;
 
     private ChatMember(String id, String name) {
         this.id = id;
