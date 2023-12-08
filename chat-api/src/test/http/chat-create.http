@@ -1,0 +1,8 @@
+### 채팅방 만들기
+POST http://localhost:8080/v1/chat/room
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJjbGllbnRfaWQiOiIxIiwiY2xpZW50X2VtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlzcyI6ImNoYXQtYXBwIiwiaWF0IjoxNzAyMDA3MzA1LCJleHAiOjE3MDIwNDMzMDV9.01DQFvsDNeQ5A0gsqSMihouc9soJXQjbHgBq1P2va2dzZL6j8VsZgXGhfzz9u918v2_QwjZbYuitNmXHMB9DsA
+Content-Type: application/json
+
+{
+  "roomName": "채팅방1"
+}

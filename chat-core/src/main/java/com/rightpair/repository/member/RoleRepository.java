@@ -1,4 +1,4 @@
-package com.rightpair.repository;
+package com.rightpair.repository.member;
 
 import com.rightpair.domain.member.Role;
 import com.rightpair.type.RoleType;

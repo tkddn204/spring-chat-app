@@ -4,7 +4,7 @@ import com.rightpair.domain.member.Member;
 import com.rightpair.domain.member.MemberOpenAuth;
 import com.rightpair.dto.OAuthRegisterMemberRequest;
 import com.rightpair.dto.OAuthRegisterMemberResponse;
-import com.rightpair.repository.MemberOpenAuthRepository;
+import com.rightpair.repository.member.MemberOpenAuthRepository;
 import com.rightpair.security.JwtPrincipal;
 import com.rightpair.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +47,7 @@ public class GoogleOAuthService extends DefaultOAuth2UserService {
         return JwtPrincipal.from(
                 String.valueOf(member.getId()),
                 member.getEmail(),
+                member.getName(),
                 member.getEnabled(),
                 member.getRolesToStrList(),
                 oAuth2User.getAttributes()

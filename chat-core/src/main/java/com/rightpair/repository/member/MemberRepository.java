@@ -1,4 +1,4 @@
-package com.rightpair.repository;
+package com.rightpair.repository.member;
 
 import com.rightpair.domain.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

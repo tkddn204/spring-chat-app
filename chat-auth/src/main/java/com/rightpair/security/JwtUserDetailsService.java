@@ -20,6 +20,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         return JwtPrincipal.from(
                 memberResponse.id(),
                 memberResponse.email(),
+                memberResponse.name(),
                 memberResponse.enabled(),
                 memberResponse.roles());
     }

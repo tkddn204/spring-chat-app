@@ -9,7 +9,7 @@ import com.rightpair.exception.RoleNotFoundException;
 import com.rightpair.jwt.JwtPair;
 import com.rightpair.jwt.dto.JwtPayload;
 import com.rightpair.jwt.service.JwtService;
-import com.rightpair.repository.*;
+import com.rightpair.repository.member.*;
 import com.rightpair.type.OauthProvider;
 import com.rightpair.type.RoleType;
 import lombok.RequiredArgsConstructor;

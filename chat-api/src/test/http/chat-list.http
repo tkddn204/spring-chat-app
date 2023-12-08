@@ -1,0 +1,7 @@
+### 채팅방 리스트 조회
+GET http://localhost:8080/v1/chat
+Authorization: Bearer <your-access-token>
+
+### 채팅방 조회
+GET http://localhost:8080/v1/chat/room/97b7de18-80e5-45e7-9727-91e6e80d6b05
+Authorization: Bearer <your-access-token>
