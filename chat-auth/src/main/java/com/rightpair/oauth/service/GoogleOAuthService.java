@@ -2,55 +2,48 @@ package com.rightpair.oauth.service;
 
 import com.rightpair.domain.member.Member;
 import com.rightpair.domain.member.MemberOpenAuth;
+import com.rightpair.dto.GoogleOAuthResourceResponse;
+import com.rightpair.dto.OAuthIdTokenPayload;
 import com.rightpair.dto.OAuthRegisterMemberRequest;
-import com.rightpair.dto.OAuthRegisterMemberResponse;
+import com.rightpair.dto.RegisterMemberResponse;
+import com.rightpair.exception.MemberNotFoundException;
+import com.rightpair.jwt.JwtPair;
+import com.rightpair.jwt.service.JwtService;
+import com.rightpair.oauth.resource.GoogleOAuthResourceRequestService;
 import com.rightpair.repository.member.MemberOpenAuthRepository;
-import com.rightpair.security.JwtPrincipal;
+import com.rightpair.repository.member.MemberRepository;
 import com.rightpair.service.AuthService;
+import com.rightpair.type.OauthProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.security.PublicKey;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class GoogleOAuthService extends DefaultOAuth2UserService {
-
+public class GoogleOAuthService {
+    private final GoogleOAuthResourceRequestService googleOAuthResourceRequestService;
     private final AuthService authService;
+    private final MemberRepository memberRepository;
+    private final JwtService jwtService;
     private final MemberOpenAuthRepository memberOpenAuthRepository;
 
-    @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2User oAuth2User = super.loadUser(userRequest);
+    public JwtPair provideMemberJwtByOAuthCode(String provider, String code) {
+        GoogleOAuthResourceResponse response = googleOAuthResourceRequestService.requestAccessToken(code);
+        List<PublicKey> oauthKeys = googleOAuthResourceRequestService.getCertKeys(code);
+        OAuthIdTokenPayload payload = jwtService.decodeOauthIdToken(response.IdToken(), oauthKeys);
 
-        String email = oAuth2User.getAttribute("email");
-        String provider = userRequest.getClientRegistration().getRegistrationId();
-        String providerId = oAuth2User.getAttribute("sub");
-
-        Optional<MemberOpenAuth> memberOpenAuthOptional = memberOpenAuthRepository.findByMemberEmail(email);
-
-        Member member;
-        if (memberOpenAuthOptional.isPresent()) {
-            MemberOpenAuth memberOpenAuth = memberOpenAuthOptional.get();
-            memberOpenAuth.updateProviderId(providerId);
-            member = memberOpenAuth.getMember();
+        Optional<MemberOpenAuth> memberOpenAuth = memberOpenAuthRepository.findByMemberEmail(payload.email());
+        if (memberOpenAuth.isEmpty()) {
+            RegisterMemberResponse registerMemberResponse = authService.oAuthRegisterMember(
+                    OAuthRegisterMemberRequest.from(payload, OauthProvider.GOOGLE.name()));
+            return JwtPair.create(registerMemberResponse.accessToken(), registerMemberResponse.refreshToken());
         } else {
-            OAuthRegisterMemberResponse oAuthRegisterMemberResponse =
-                    authService.oAuthRegisterMember(OAuthRegisterMemberRequest.from(oAuth2User, provider));
-            member = oAuthRegisterMemberResponse.member();
+            Member member = memberRepository.findById(memberOpenAuth.get().getId())
+                    .orElseThrow(MemberNotFoundException::new);
+            return authService.createJwtPairAndSaveRefreshToken(member);
         }
-
-        return JwtPrincipal.from(
-                String.valueOf(member.getId()),
-                member.getEmail(),
-                member.getName(),
-                member.getEnabled(),
-                member.getRolesToStrList(),
-                oAuth2User.getAttributes()
-        );
     }
 }

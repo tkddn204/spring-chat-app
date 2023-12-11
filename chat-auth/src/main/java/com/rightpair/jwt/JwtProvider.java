@@ -1,5 +1,6 @@
 package com.rightpair.jwt;
 
+import com.rightpair.dto.OAuthIdTokenPayload;
 import com.rightpair.exception.ErrorCode;
 import com.rightpair.exception.JwtVerifyException;
 import com.rightpair.jwt.dto.JwtPayload;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.security.PublicKey;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class JwtProvider {
@@ -54,6 +57,31 @@ public class JwtProvider {
                         e.getClaims().get(CLIENT_EMAIL_KEY, String.class),
                         e.getClaims().getIssuedAt());
             }
+            throw new JwtVerifyException(ErrorCode.JWT_EXPIRED_ERROR);
+        } catch (SignatureException e) {
+            throw new JwtVerifyException(ErrorCode.JWT_INVALID_SIGNATURE_ERROR);
+        } catch (MalformedJwtException e) {
+            throw new JwtVerifyException(ErrorCode.JWT_MALFORMED_ERROR);
+        } catch (UnsupportedJwtException | IllegalArgumentException e) {
+            throw new JwtVerifyException(ErrorCode.JWT_UNSUPPORTED_ERROR);
+        }
+    }
+
+    public OAuthIdTokenPayload verifyIdTokenPayload(String idToken, List<PublicKey> publicKeys) {
+        try {
+            for (PublicKey publicKey : publicKeys) {
+                try {
+                    Claims claims = Jwts.parser()
+                            .verifyWith(publicKey)
+                            .build()
+                            .parseSignedClaims(idToken)
+                            .getPayload();
+                    return OAuthIdTokenPayload.create(claims);
+                } catch (JwtException ignored) {
+                }
+            }
+            throw new JwtVerifyException(ErrorCode.JWT_PUBLIC_KEY_NOT_VALID_ERROR);
+        } catch (ExpiredJwtException e) {
             throw new JwtVerifyException(ErrorCode.JWT_EXPIRED_ERROR);
         } catch (SignatureException e) {
             throw new JwtVerifyException(ErrorCode.JWT_INVALID_SIGNATURE_ERROR);

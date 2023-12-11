@@ -11,11 +11,15 @@ public enum ErrorCode {
     INVALID_AUTHORIZATION_HEADER("Authorization 헤더의 형식이 올바르지 않습니다."),
     INVALID_VALIDATION("올바르지 않은 요청 형식입니다."),
 
+    // OAUTH
+    OAUTH_REST_CLIENT_ERROR("OAUTH 통신에서 에러가 발생했습니다."),
+
     // JWT
     JWT_EXPIRED_ERROR("만료된 JWT입니다."),
     JWT_INVALID_SIGNATURE_ERROR("JWT의 시그니처가 올바르지 않습니다."),
     JWT_MALFORMED_ERROR("JWT의 시그니처가 올바르지 않습니다."),
     JWT_UNSUPPORTED_ERROR("지원하지 않는 형식의 JWT입니다."),
+    JWT_PUBLIC_KEY_NOT_VALID_ERROR("캐싱된 키로 OAuth Id token을 검증하는데 실패했습니다."),
 
     // 멤버
     MEMBER_NOT_FOUND_ERROR("해당 멤버가 존재하지 않습니다."),
