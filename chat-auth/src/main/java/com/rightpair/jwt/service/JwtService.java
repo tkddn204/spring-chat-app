@@ -1,5 +1,6 @@
 package com.rightpair.jwt.service;
 
+import com.rightpair.dto.OAuthIdTokenPayload;
 import com.rightpair.jwt.JwtPair;
 import com.rightpair.jwt.JwtProvider;
 import com.rightpair.jwt.dto.JwtPayload;
@@ -7,6 +8,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.security.PublicKey;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -37,5 +41,9 @@ public class JwtService {
 
     public JwtPayload verifyRefreshToken(String refreshToken) {
         return jwtProvider.verifyToken(refreshToken, true);
+    }
+
+    public OAuthIdTokenPayload decodeOauthIdToken(String idToken, List<PublicKey> oauthKeys) {
+        return jwtProvider.verifyIdTokenPayload(idToken, oauthKeys);
     }
 }

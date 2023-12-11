@@ -21,4 +21,14 @@ public record OAuthRegisterMemberRequest(
                 oAuth2User.getAttribute("sub")
         );
     }
+
+    public static OAuthRegisterMemberRequest from(OAuthIdTokenPayload payload, String provider) {
+        return new OAuthRegisterMemberRequest(
+                payload.email(),
+                UUID.randomUUID().toString(),
+                payload.name(),
+                provider,
+                payload.sub()
+        );
+    }
 }

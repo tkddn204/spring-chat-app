@@ -1,7 +1,5 @@
 package com.rightpair.config;
 
-import com.rightpair.oauth.handler.OAuthLoginSuccessHandler;
-import com.rightpair.oauth.service.GoogleOAuthService;
 import com.rightpair.security.JwtExceptionFilter;
 import com.rightpair.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +21,6 @@ public class SecurityFilterConfig {
     private final CorsConfigurationSource corsConfigurationSource;
     private final JwtExceptionFilter jwtExceptionFilter;
     private final JwtFilter jwtFilter;
-    private final GoogleOAuthService googleOAuthService;
-    private final OAuthLoginSuccessHandler oAuthLoginSuccessHandler;
 
     @Bean
     public SecurityFilterChain http(HttpSecurity http) throws Exception {
@@ -38,14 +34,10 @@ public class SecurityFilterConfig {
         http.authorizeHttpRequests(request ->
                 request.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                        .requestMatchers("/oauth2/**").permitAll()
                         .requestMatchers("/v1/auth/**", "/v1/oauth/**").permitAll()
                         .requestMatchers("/", "/error", "/csrf").permitAll()
                         .anyRequest().authenticated()
-        );
-
-        http.oauth2Login(configurer ->
-                configurer.userInfoEndpoint(config -> config.userService(googleOAuthService))
-                        .successHandler(oAuthLoginSuccessHandler)
         );
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

@@ -51,13 +51,13 @@ public class AuthService {
     }
 
     @Transactional
-    public OAuthRegisterMemberResponse oAuthRegisterMember(OAuthRegisterMemberRequest request) {
+    public RegisterMemberResponse oAuthRegisterMember(OAuthRegisterMemberRequest request) {
         Member savedMember = registerOfUser(request.email(), request.password(), request.name());
 
         memberOpenAuthRepository.save(
                 MemberOpenAuth.create(savedMember, OauthProvider.GOOGLE, request.providerId()));
 
-        return OAuthRegisterMemberResponse.from(savedMember);
+        return RegisterMemberResponse.fromJwtPair(createJwtPairAndSaveRefreshToken(savedMember));
     }
 
     private Member registerOfUser(String email, String password, String name) {
