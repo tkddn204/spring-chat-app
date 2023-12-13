@@ -6,6 +6,7 @@ import com.rightpair.auth.jwt.service.JwtService;
 import com.rightpair.auth.oauth.resource.GoogleOAuthResourceRequestService;
 import com.rightpair.auth.service.AuthService;
 import com.rightpair.auth.service.request.OAuthRegisterMemberRequest;
+import com.rightpair.auth.service.response.GoogleOAuthCertKeysResponse;
 import com.rightpair.auth.service.response.GoogleOAuthResourceResponse;
 import com.rightpair.auth.service.response.OAuthIdTokenPayload;
 import com.rightpair.auth.service.response.RegisterMemberResponse;
@@ -18,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.PublicKey;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -31,9 +31,14 @@ public class GoogleOAuthService {
     private final MemberOpenAuthRepository memberOpenAuthRepository;
 
     public JwtPair provideMemberJwtByOAuthCode(String provider, String code) {
-        GoogleOAuthResourceResponse response = googleOAuthResourceRequestService.requestAccessToken(code);
-        List<PublicKey> oauthKeys = googleOAuthResourceRequestService.getCertKeys(code);
-        OAuthIdTokenPayload payload = jwtService.decodeOauthIdToken(response.IdToken(), oauthKeys);
+        GoogleOAuthResourceResponse resourceResponse = googleOAuthResourceRequestService.requestAccessToken(code);
+        GoogleOAuthCertKeysResponse certKeysResponse = googleOAuthResourceRequestService.getGoogleOAuthCertKeys();
+
+        String idToken = resourceResponse.IdToken();
+        String oAuthIdTokenKeyId = jwtService.getOAuthIdTokenKeyId(idToken);
+        PublicKey oAuthKey = googleOAuthResourceRequestService.getCertPublicKeys(
+                certKeysResponse.keys(), oAuthIdTokenKeyId);
+        OAuthIdTokenPayload payload = jwtService.decodeOauthIdToken(idToken, oAuthKey);
 
         Optional<MemberOpenAuth> memberOpenAuth = memberOpenAuthRepository.findByMemberEmail(payload.email());
         if (memberOpenAuth.isEmpty()) {

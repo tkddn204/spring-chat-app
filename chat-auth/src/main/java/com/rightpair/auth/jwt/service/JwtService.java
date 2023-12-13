@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.PublicKey;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -43,7 +42,11 @@ public class JwtService {
         return jwtProvider.verifyToken(refreshToken, true);
     }
 
-    public OAuthIdTokenPayload decodeOauthIdToken(String idToken, List<PublicKey> oauthKeys) {
+    public String getOAuthIdTokenKeyId(String idToken) {
+        return jwtProvider.getKeyIdFromIdToken(idToken);
+    }
+
+    public OAuthIdTokenPayload decodeOauthIdToken(String idToken, PublicKey oauthKeys) {
         return jwtProvider.verifyIdTokenPayload(idToken, oauthKeys);
     }
 }

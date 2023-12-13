@@ -1,5 +1,6 @@
 package com.rightpair.auth.oauth.util;
 
+import com.rightpair.auth.exception.InvalidOAuthPublicKeyException;
 import com.rightpair.auth.service.response.GoogleOAuthCertKeysResponse;
 
 import java.math.BigInteger;
@@ -27,7 +28,7 @@ public class CertKeyUtils {
                     new RSAPublicKeySpec(modulus, exponent)
             );
         } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+            throw new InvalidOAuthPublicKeyException();
         }
     }
 }

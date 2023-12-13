@@ -12,6 +12,7 @@ public enum ErrorCode {
     INVALID_VALIDATION("올바르지 않은 요청 형식입니다."),
 
     // OAUTH
+    OAUTH_INVALID_PUBLIC_KEY_ERROR("올바르지 않은 OAUTH public key입니다."),
     OAUTH_REST_CLIENT_ERROR("OAUTH 통신에서 에러가 발생했습니다."),
 
     // JWT

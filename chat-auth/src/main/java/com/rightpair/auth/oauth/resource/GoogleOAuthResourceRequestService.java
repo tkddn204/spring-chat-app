@@ -1,6 +1,7 @@
 package com.rightpair.auth.oauth.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rightpair.auth.exception.InvalidOAuthPublicKeyException;
 import com.rightpair.auth.exception.OAuthRestClientException;
 import com.rightpair.auth.oauth.util.CertKeyUtils;
 import com.rightpair.auth.service.response.GoogleOAuthCertKeysResponse;
@@ -52,13 +53,18 @@ public class GoogleOAuthResourceRequestService {
         }
     }
 
-    public List<PublicKey> getCertKeys(String code) {
+    public GoogleOAuthCertKeysResponse getGoogleOAuthCertKeys() {
         try (InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(GOOGLE_CERT_KEYS_JSON_FILE)) {
-            ObjectMapper mapper = new ObjectMapper();
-            GoogleOAuthCertKeysResponse jsonObj = mapper.readValue(in, GoogleOAuthCertKeysResponse.class);
-            return jsonObj.keys().stream().map(CertKeyUtils::getPublicKey).toList();
+            return objectMapper.readValue(in, GoogleOAuthCertKeysResponse.class);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public PublicKey getCertPublicKeys(List<GoogleOAuthCertKeysResponse.CertKey> certKeys, String keyId) {
+        return CertKeyUtils.getPublicKey(certKeys.stream()
+                .filter(certKey -> certKey.kid().equals(keyId))
+                .findAny()
+                .orElseThrow(InvalidOAuthPublicKeyException::new));
     }
 }

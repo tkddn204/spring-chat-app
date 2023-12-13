@@ -1,5 +1,7 @@
 package com.rightpair.auth.jwt;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rightpair.auth.exception.JwtVerifyException;
 import com.rightpair.auth.jwt.dto.JwtPayload;
 import com.rightpair.auth.service.response.OAuthIdTokenPayload;
@@ -12,9 +14,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.io.IOException;
 import java.security.PublicKey;
+import java.util.Base64;
 import java.util.Date;
-import java.util.List;
 
 @Component
 public class JwtProvider {
@@ -23,9 +26,11 @@ public class JwtProvider {
     private static final String CLIENT_EMAIL_KEY = "client_email";
 
     private final SecretKey secretKey;
+    private final ObjectMapper objectMapper;
 
-    public JwtProvider(@Value("${service.jwt.secret-key}") String secretKey) {
+    public JwtProvider(@Value("${service.jwt.secret-key}") String secretKey, ObjectMapper objectMapper) {
         this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
+        this.objectMapper = objectMapper;
     }
 
     public String createToken(JwtPayload jwtPayload, long expiration) {
@@ -67,20 +72,24 @@ public class JwtProvider {
         }
     }
 
-    public OAuthIdTokenPayload verifyIdTokenPayload(String idToken, List<PublicKey> publicKeys) {
+    public String getKeyIdFromIdToken(String idToken) {
         try {
-            for (PublicKey publicKey : publicKeys) {
-                try {
-                    Claims claims = Jwts.parser()
-                            .verifyWith(publicKey)
-                            .build()
-                            .parseSignedClaims(idToken)
-                            .getPayload();
-                    return OAuthIdTokenPayload.create(claims);
-                } catch (JwtException ignored) {
-                }
-            }
+            String idTokenHeader = idToken.substring(0, idToken.indexOf('.'));
+            JsonNode jsonNode = objectMapper.readTree(Base64.getUrlDecoder().decode(idTokenHeader + "=="));
+            return jsonNode.get("kid").asText();
+        } catch (IOException e) {
             throw new JwtVerifyException(ErrorCode.JWT_PUBLIC_KEY_NOT_VALID_ERROR);
+        }
+    }
+
+    public OAuthIdTokenPayload verifyIdTokenPayload(String idToken, PublicKey publicKey) {
+        try {
+            Claims claims = Jwts.parser()
+                    .verifyWith(publicKey)
+                    .build()
+                    .parseSignedClaims(idToken)
+                    .getPayload();
+            return OAuthIdTokenPayload.create(claims);
         } catch (ExpiredJwtException e) {
             throw new JwtVerifyException(ErrorCode.JWT_EXPIRED_ERROR);
         } catch (SignatureException e) {
