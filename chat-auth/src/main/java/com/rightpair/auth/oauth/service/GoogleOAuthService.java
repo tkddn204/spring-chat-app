@@ -1,14 +1,14 @@
 package com.rightpair.auth.oauth.service;
 
-import com.rightpair.auth.dto.GoogleOAuthResourceResponse;
-import com.rightpair.auth.dto.OAuthIdTokenPayload;
-import com.rightpair.auth.dto.OAuthRegisterMemberRequest;
-import com.rightpair.auth.dto.RegisterMemberResponse;
 import com.rightpair.auth.exception.MemberNotFoundException;
 import com.rightpair.auth.jwt.JwtPair;
 import com.rightpair.auth.jwt.service.JwtService;
 import com.rightpair.auth.oauth.resource.GoogleOAuthResourceRequestService;
 import com.rightpair.auth.service.AuthService;
+import com.rightpair.auth.service.request.OAuthRegisterMemberRequest;
+import com.rightpair.auth.service.response.GoogleOAuthResourceResponse;
+import com.rightpair.auth.service.response.OAuthIdTokenPayload;
+import com.rightpair.auth.service.response.RegisterMemberResponse;
 import com.rightpair.core.domain.member.Member;
 import com.rightpair.core.domain.member.MemberOpenAuth;
 import com.rightpair.core.repository.member.MemberOpenAuthRepository;

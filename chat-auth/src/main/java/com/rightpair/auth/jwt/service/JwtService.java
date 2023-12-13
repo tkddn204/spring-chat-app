@@ -1,9 +1,9 @@
 package com.rightpair.auth.jwt.service;
 
-import com.rightpair.auth.dto.OAuthIdTokenPayload;
 import com.rightpair.auth.jwt.JwtPair;
 import com.rightpair.auth.jwt.JwtProvider;
 import com.rightpair.auth.jwt.dto.JwtPayload;
+import com.rightpair.auth.service.response.OAuthIdTokenPayload;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

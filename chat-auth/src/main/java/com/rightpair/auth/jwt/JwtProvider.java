@@ -1,8 +1,8 @@
 package com.rightpair.auth.jwt;
 
-import com.rightpair.auth.dto.OAuthIdTokenPayload;
 import com.rightpair.auth.exception.JwtVerifyException;
 import com.rightpair.auth.jwt.dto.JwtPayload;
+import com.rightpair.auth.service.response.OAuthIdTokenPayload;
 import com.rightpair.core.exception.ErrorCode;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

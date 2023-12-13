@@ -1,4 +1,4 @@
-package com.rightpair.auth.dto;
+package com.rightpair.auth.service.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

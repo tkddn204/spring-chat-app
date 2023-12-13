@@ -1,6 +1,6 @@
 package com.rightpair.auth.oauth.util;
 
-import com.rightpair.auth.dto.GoogleOAuthCertKeysResponse;
+import com.rightpair.auth.service.response.GoogleOAuthCertKeysResponse;
 
 import java.math.BigInteger;
 import java.security.KeyFactory;
@@ -12,8 +12,16 @@ import java.util.Base64;
 
 public class CertKeyUtils {
     public static PublicKey getPublicKey(GoogleOAuthCertKeysResponse.CertKey certKey) {
-        BigInteger modulus = new BigInteger(1, Base64.getUrlDecoder().decode(certKey.n()));
-        BigInteger exponent = new BigInteger(1, Base64.getUrlDecoder().decode(certKey.e()));
+        BigInteger modulus = decode(certKey.n());
+        BigInteger exponent = decode(certKey.e());
+        return generatePublicKey(certKey, modulus, exponent);
+    }
+
+    private static BigInteger decode(String keyComponent) {
+        return new BigInteger(1, Base64.getUrlDecoder().decode(keyComponent));
+    }
+
+    private static PublicKey generatePublicKey(GoogleOAuthCertKeysResponse.CertKey certKey, BigInteger modulus, BigInteger exponent) {
         try {
             return KeyFactory.getInstance(certKey.kty()).generatePublic(
                     new RSAPublicKeySpec(modulus, exponent)

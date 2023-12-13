@@ -1,10 +1,10 @@
 package com.rightpair.auth.oauth.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rightpair.auth.dto.GoogleOAuthCertKeysResponse;
-import com.rightpair.auth.dto.GoogleOAuthResourceResponse;
 import com.rightpair.auth.exception.OAuthRestClientException;
 import com.rightpair.auth.oauth.util.CertKeyUtils;
+import com.rightpair.auth.service.response.GoogleOAuthCertKeysResponse;
+import com.rightpair.auth.service.response.GoogleOAuthResourceResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;

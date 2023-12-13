@@ -1,4 +1,4 @@
-package com.rightpair.auth.dto;
+package com.rightpair.auth.service.request;
 
 import com.rightpair.auth.controller.request.RegisterMemberControllerRequest;
 

@@ -1,7 +1,7 @@
 package com.rightpair.auth.security;
 
-import com.rightpair.auth.dto.GetMemberResponse;
 import com.rightpair.auth.service.AuthService;
+import com.rightpair.auth.service.response.GetMemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

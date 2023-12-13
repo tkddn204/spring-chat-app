@@ -1,4 +1,4 @@
-package com.rightpair.auth.dto;
+package com.rightpair.auth.service.response;
 
 import java.util.List;
 

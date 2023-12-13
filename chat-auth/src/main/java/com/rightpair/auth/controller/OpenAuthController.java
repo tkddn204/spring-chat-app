@@ -1,8 +1,8 @@
 package com.rightpair.auth.controller;
 
 import com.rightpair.auth.controller.request.OpenAuthControllerRequest;
-import com.rightpair.auth.dto.AuthenticateMemberResponse;
 import com.rightpair.auth.oauth.service.GoogleOAuthService;
+import com.rightpair.auth.service.response.AuthenticateMemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

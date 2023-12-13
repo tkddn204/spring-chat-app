@@ -1,5 +1,6 @@
-package com.rightpair.auth.dto;
+package com.rightpair.auth.service.request;
 
+import com.rightpair.auth.service.response.OAuthIdTokenPayload;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.UUID;

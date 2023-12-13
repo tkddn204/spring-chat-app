@@ -1,6 +1,5 @@
 package com.rightpair.auth.service;
 
-import com.rightpair.auth.dto.*;
 import com.rightpair.auth.exception.MemberAlreadyExistedException;
 import com.rightpair.auth.exception.MemberNotFoundException;
 import com.rightpair.auth.exception.MemberWrongPasswordException;
@@ -8,6 +7,12 @@ import com.rightpair.auth.exception.RoleNotFoundException;
 import com.rightpair.auth.jwt.JwtPair;
 import com.rightpair.auth.jwt.dto.JwtPayload;
 import com.rightpair.auth.jwt.service.JwtService;
+import com.rightpair.auth.service.request.AuthenticateMemberRequest;
+import com.rightpair.auth.service.request.OAuthRegisterMemberRequest;
+import com.rightpair.auth.service.request.RegisterMemberRequest;
+import com.rightpair.auth.service.response.AuthenticateMemberResponse;
+import com.rightpair.auth.service.response.GetMemberResponse;
+import com.rightpair.auth.service.response.RegisterMemberResponse;
 import com.rightpair.core.domain.member.*;
 import com.rightpair.core.repository.member.*;
 import com.rightpair.core.type.OauthProvider;
