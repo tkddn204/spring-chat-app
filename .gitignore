@@ -44,3 +44,4 @@ bin/
 ### Private Files ###
 .env
 **/src/main/**/application-*.yml
+**/src/main/**/client_secret.json

@@ -1,5 +1,6 @@
 package com.rightpair.auth.service.request;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.rightpair.auth.service.response.OAuthIdTokenPayload;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
@@ -30,6 +31,17 @@ public record OAuthRegisterMemberRequest(
                 payload.name(),
                 provider,
                 payload.sub()
+        );
+    }
+
+    public static OAuthRegisterMemberRequest from(GoogleIdToken googleIdToken, String provider) {
+        GoogleIdToken.Payload payload = googleIdToken.getPayload();
+        return new OAuthRegisterMemberRequest(
+                payload.getEmail(),
+                UUID.randomUUID().toString(),
+                (String) payload.get("name"),
+                provider,
+                payload.getSubject()
         );
     }
 }
