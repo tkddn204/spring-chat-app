@@ -35,7 +35,7 @@ public class GoogleOAuthService {
                     OAuthRegisterMemberRequest.from(googleIdToken, OauthProvider.GOOGLE.name()));
             return JwtPair.create(registerMemberResponse.accessToken(), registerMemberResponse.refreshToken());
         } else {
-            Member member = memberRepository.findById(memberOpenAuth.get().getId())
+            Member member = memberRepository.findById(memberOpenAuth.get().getMember().getId())
                     .orElseThrow(MemberNotFoundException::new);
             return authService.createJwtPairAndSaveRefreshToken(member);
         }
