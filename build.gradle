@@ -43,15 +43,20 @@ subprojects {
 }
 
 project(":chat-auth") {
-    dependencies {
-        implementation(project(":chat-core"))
+    bootJar {
+        enabled true
+    }
+    jar {
+        enabled false
     }
 }
 
 project(":chat-api") {
-    dependencies {
-        implementation(project(":chat-core"))
-        implementation(project(":chat-auth"))
+    bootJar {
+        enabled true
+    }
+    jar {
+        enabled false
     }
 }
 

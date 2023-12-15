@@ -2,7 +2,7 @@
   <configuration default="false" name="(dev) ChatAuthApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="dev" />
     <module name="spring-chat-app.chat-auth.main" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="com.rightpair.ChatAuthApplication" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.rightpair.auth.ChatAuthApplication" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.rightpair.*" />
