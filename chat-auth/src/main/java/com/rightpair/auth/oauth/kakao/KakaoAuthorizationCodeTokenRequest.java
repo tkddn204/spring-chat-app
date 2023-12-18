@@ -13,12 +13,9 @@ import java.io.IOException;
 import java.util.Collection;
 
 public class KakaoAuthorizationCodeTokenRequest extends AuthorizationCodeTokenRequest {
-    public KakaoAuthorizationCodeTokenRequest(HttpTransport transport, JsonFactory jsonFactory, String clientId, String clientSecret, String code, String redirectUri) {
-        this(transport, jsonFactory, "https://kauth.kakao.com/oauth/token", clientId, clientSecret, code, redirectUri);
-    }
 
-    public KakaoAuthorizationCodeTokenRequest(HttpTransport transport, JsonFactory jsonFactory, String tokenServerEncodedUrl, String clientId, String clientSecret, String code, String redirectUri) {
-        super(transport, jsonFactory, new GenericUrl(tokenServerEncodedUrl), code);
+    public KakaoAuthorizationCodeTokenRequest(HttpTransport transport, JsonFactory jsonFactory, String clientId, String clientSecret, String code, String redirectUri) {
+        super(transport, jsonFactory, new GenericUrl("https://kauth.kakao.com/oauth/token"), code);
         this.setClientAuthentication(new ClientParametersAuthentication(clientId, clientSecret));
         this.setRedirectUri(redirectUri);
     }

@@ -46,7 +46,6 @@ public class KakaoAuthorizationCodeFlow extends AuthorizationCodeFlow {
         return (new KakaoAuthorizationCodeTokenRequest(
                 this.getTransport(),
                 this.getJsonFactory(),
-                this.getTokenServerEncodedUrl(),
                 "",
                 "",
                 authorizationCode,

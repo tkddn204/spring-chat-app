@@ -19,12 +19,13 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class KakaoOAuthService {
+public class KakaoOAuthService implements OAuthService {
     private final KakaoOAuthResourceRequestService kakaoOAuthResourceRequestService;
     private final AuthService authService;
     private final MemberRepository memberRepository;
     private final MemberOpenAuthRepository memberOpenAuthRepository;
 
+    @Override
     public JwtPair provideMemberJwtByOAuthCode(String code) {
         KakaoIdToken kakaoIdToken = kakaoOAuthResourceRequestService.getKakaoIdToken(code);
         Optional<MemberOpenAuth> memberOpenAuth =

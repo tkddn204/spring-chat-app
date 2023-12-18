@@ -19,12 +19,13 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class GoogleOAuthService {
+public class GoogleOAuthService implements OAuthService {
     private final GoogleOAuthResourceRequestService googleOAuthResourceRequestService;
     private final AuthService authService;
     private final MemberRepository memberRepository;
     private final MemberOpenAuthRepository memberOpenAuthRepository;
 
+    @Override
     public JwtPair provideMemberJwtByOAuthCode(String code) {
         GoogleIdToken googleIdToken = googleOAuthResourceRequestService.getGoogleIdToken(code);
         Optional<MemberOpenAuth> memberOpenAuth =
