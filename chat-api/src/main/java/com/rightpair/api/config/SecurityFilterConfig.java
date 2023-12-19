@@ -36,7 +36,7 @@ public class SecurityFilterConfig {
                 request.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                         .requestMatchers("/oauth2/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/v1/chat").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/v1/chat/**").permitAll()
                         .requestMatchers("/v1/auth/**", "/v1/oauth/**").permitAll()
                         .requestMatchers("/", "/error", "/csrf").permitAll()
                         .anyRequest().authenticated()

@@ -33,6 +33,7 @@ public enum ErrorCode {
     // 채팅방
     CHAT_ROOM_NOT_FOUND_ERROR("해당 채팅방이 존재하지 않습니다."),
     CHAT_ROOM_ALREADY_EXISTED_ERROR("이미 존재하는 채팅방입니다."),
+    MEMBER_NOT_ENTERED_CHAT_ROOM_ERROR("채팅방에 입장하지 않은 멤버입니다."),
 
     // 공통
     INTERNAL_SERVICE_ERROR("내부 서비스 에러입니다.");

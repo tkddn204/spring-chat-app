@@ -24,6 +24,7 @@ public class JwtProvider {
     private static final String JWT_ISSUER = "chat-app";
     private static final String CLIENT_ID_KEY = "client_id";
     private static final String CLIENT_EMAIL_KEY = "client_email";
+    private static final String CLIENT_NAME_KEY = "client_name";
 
     private final SecretKey secretKey;
     private final ObjectMapper objectMapper;
@@ -54,12 +55,14 @@ public class JwtProvider {
             return JwtPayload.fromClaims(
                     claims.get(CLIENT_ID_KEY, String.class),
                     claims.get(CLIENT_EMAIL_KEY, String.class),
+                    claims.get(CLIENT_NAME_KEY, String.class),
                     claims.getIssuedAt());
         } catch (ExpiredJwtException e) {
             if (!isStrict) {
                 return JwtPayload.fromClaims(
                         e.getClaims().get(CLIENT_ID_KEY, String.class),
                         e.getClaims().get(CLIENT_EMAIL_KEY, String.class),
+                        e.getClaims().get(CLIENT_NAME_KEY, String.class),
                         e.getClaims().getIssuedAt());
             }
             throw new JwtVerifyException(ErrorCode.JWT_EXPIRED_ERROR);

@@ -79,7 +79,7 @@ public class AuthService {
     @Transactional
     public JwtPair createJwtPairAndSaveRefreshToken(Member member) {
         JwtPair jwtPair = jwtService.createTokenPair(
-                JwtPayload.from(String.valueOf(member.getId()), member.getEmail()));
+                JwtPayload.from(String.valueOf(member.getId()), member.getEmail(), member.getName()));
         memberAuthTokenRepository.save(MemberAuthToken.create(member, jwtPair.refreshToken(),
                 LocalDateTime.now().plus(jwtService.getRefreshExpiration(), ChronoUnit.MILLIS)));
         return jwtPair;

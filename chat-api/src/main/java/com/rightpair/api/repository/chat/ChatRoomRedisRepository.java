@@ -2,6 +2,7 @@ package com.rightpair.api.repository.chat;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rightpair.api.domain.chat.ChatMessage;
 import com.rightpair.api.domain.chat.ChatRoom;
 import com.rightpair.api.repository.RedisRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @Repository
 public class ChatRoomRedisRepository implements RedisRepository<ChatRoom> {
 
+    public final static String CHAT_CHANNEL_TOPIC = "pubsub:chat";
     private final static String KEY_PREFIX = "chat:room:";
     private final StringRedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
@@ -38,7 +40,7 @@ public class ChatRoomRedisRepository implements RedisRepository<ChatRoom> {
     private ChatRoom readValue(String value) {
         try {
             return objectMapper.readValue(value, ChatRoom.class);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -60,5 +62,13 @@ public class ChatRoomRedisRepository implements RedisRepository<ChatRoom> {
     @Override
     public Boolean deleteByKey(String key) {
         return redisTemplate.delete(KEY_PREFIX + key);
+    }
+
+    public void publish(ChatMessage message) {
+        try {
+            redisTemplate.convertAndSend(CHAT_CHANNEL_TOPIC + message.getRoomId(), objectMapper.writeValueAsString(message));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
