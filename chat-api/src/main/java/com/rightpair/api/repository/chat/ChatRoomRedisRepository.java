@@ -3,7 +3,7 @@ package com.rightpair.api.repository.chat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rightpair.api.domain.chat.ChatRoom;
-import com.rightpair.core.repository.RedisRepository;
+import com.rightpair.api.repository.RedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;

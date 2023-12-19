@@ -1,7 +1,7 @@
 package com.rightpair.api.controller.request;
 
 import com.rightpair.api.domain.chat.ChatMember;
-import type.MessageType;
+import com.rightpair.api.type.MessageType;
 
 public record ChatMessageControllerRequest(
         MessageType messageType,

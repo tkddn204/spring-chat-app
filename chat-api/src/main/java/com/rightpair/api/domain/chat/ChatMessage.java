@@ -1,8 +1,8 @@
 package com.rightpair.api.domain.chat;
 
 
+import com.rightpair.api.type.MessageType;
 import lombok.Getter;
-import type.MessageType;
 
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
 package com.rightpair.api.websocket;
 
-//import com.rightpair.auth.jwt.service.JwtService;
+//import com.rightpair.api.jwt.service.JwtService;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.messaging.Message;
 //import org.springframework.messaging.MessageChannel;

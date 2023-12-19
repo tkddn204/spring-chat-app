@@ -2,7 +2,7 @@ package com.rightpair.api.dto;
 
 import com.rightpair.api.controller.request.ChatMessageControllerRequest;
 import com.rightpair.api.domain.chat.ChatMember;
-import type.MessageType;
+import com.rightpair.api.type.MessageType;
 
 public record ChatMessageRequest(
         MessageType messageType,
