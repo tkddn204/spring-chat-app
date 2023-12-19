@@ -1,8 +1,8 @@
 package com.rightpair.api.domain.chat;
 
 
+import com.rightpair.api.type.MessageType;
 import lombok.Getter;
-import type.MessageType;
 
 import java.util.UUID;
 
@@ -28,8 +28,8 @@ public class ChatMessage {
         String randomMessageId = UUID.randomUUID().toString();
         String exchangeMessage = switch (messageType) {
             case ENTER -> chatMember.getName() + "님이 입장하셨습니다.";
-            case CONNECTED -> message;
             case EXIT -> chatMember.getName() + "님이 퇴장하셨습니다.";
+            case MESSAGE -> message;
         };
         return new ChatMessage(randomMessageId, messageType, roomId, chatMember, exchangeMessage, timestamp);
     }

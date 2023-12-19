@@ -20,6 +20,10 @@ configurations {
     }
 }
 
+bootJar {
+    enabled = false
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
@@ -39,33 +43,5 @@ subprojects {
 
     test {
         useJUnitPlatform()
-    }
-}
-
-project(":chat-auth") {
-    bootJar {
-        enabled true
-    }
-    jar {
-        enabled false
-    }
-}
-
-project(":chat-api") {
-    bootJar {
-        enabled true
-    }
-    jar {
-        enabled false
-    }
-}
-
-// core 설정
-project(":chat-core") {
-    bootJar {
-        enabled false
-    }
-    jar {
-        enabled true
     }
 }

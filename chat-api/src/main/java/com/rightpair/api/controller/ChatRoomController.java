@@ -1,14 +1,17 @@
 package com.rightpair.api.controller;
 
 import com.rightpair.api.controller.request.CreateChatRoomControllerRequest;
+import com.rightpair.api.domain.chat.ChatMessage;
 import com.rightpair.api.dto.ChatRoomListResponse;
 import com.rightpair.api.dto.ChatRoomResponse;
+import com.rightpair.api.resolver.AuthContext;
+import com.rightpair.api.security.JwtPrincipal;
 import com.rightpair.api.service.ChatRoomService;
-import com.rightpair.auth.resolver.AuthContext;
-import com.rightpair.auth.security.JwtPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/v1/chat")
@@ -48,5 +51,13 @@ public class ChatRoomController {
         chatRoomService.enterChatRoom(
                 jwtPrincipal.getMemberId(), jwtPrincipal.getMemberName(), chatRoomId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/room/message/{chat_room_id}")
+    public ResponseEntity<List<ChatMessage>> getChatMessages(
+            @PathVariable("chat_room_id") String chatRoomId,
+            @AuthContext JwtPrincipal jwtPrincipal
+    ) {
+        return ResponseEntity.ok().body(chatRoomService.getChatMessages(jwtPrincipal.getMemberId(), chatRoomId));
     }
 }

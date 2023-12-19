@@ -1,19 +1,17 @@
 package com.rightpair.api.pubsub;
 
 import com.rightpair.api.domain.chat.ChatMessage;
+import com.rightpair.api.repository.chat.ChatRoomRedisRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
-
-import static com.rightpair.api.config.RedisMessageConfig.CHAT_CHANNEL_TOPIC;
 
 @RequiredArgsConstructor
 @Component
 public class ChatRoomPublisher {
 
-    private final StringRedisTemplate redisTemplate;
+    private final ChatRoomRedisRepository chatRoomRedisRepository;
 
-    public void publish(String roomId, ChatMessage message) {
-        redisTemplate.convertAndSend(CHAT_CHANNEL_TOPIC, message);
+    public void publish(ChatMessage message) {
+        chatRoomRedisRepository.publish(message);
     }
 }

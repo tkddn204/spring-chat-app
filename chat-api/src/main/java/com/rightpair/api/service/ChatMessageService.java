@@ -29,6 +29,6 @@ public class ChatMessageService {
 
         chatRoom.messages().add(chatMessage);
         chatRoomRedisRepository.save(chatRoom);
-        chatRoomPublisher.publish(request.roomId(), chatMessage);
+        chatRoomPublisher.publish(chatMessage);
     }
 }
