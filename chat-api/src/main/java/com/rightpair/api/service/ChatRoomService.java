@@ -6,7 +6,7 @@ import com.rightpair.api.domain.chat.ChatRoom;
 import com.rightpair.api.dto.ChatRoomListResponse;
 import com.rightpair.api.exception.ChatRoomAlreadyExistedException;
 import com.rightpair.api.exception.ChatRoomNotFoundException;
-import com.rightpair.api.exception.MemberNotEnteredChatRoomException;
+import com.rightpair.api.exception.business.MemberNotEnteredChatRoomException;
 import com.rightpair.api.pubsub.ChatRoomSubscriber;
 import com.rightpair.api.repository.chat.ChatRoomRedisRepository;
 import lombok.RequiredArgsConstructor;

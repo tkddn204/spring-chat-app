@@ -1,7 +1,7 @@
 package com.rightpair.api.oauth.service;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.rightpair.api.exception.MemberNotFoundException;
+import com.rightpair.api.exception.business.MemberNotFoundException;
 import com.rightpair.api.jwt.JwtPair;
 import com.rightpair.api.oauth.resource.GoogleOAuthResourceRequestService;
 import com.rightpair.api.service.AuthService;

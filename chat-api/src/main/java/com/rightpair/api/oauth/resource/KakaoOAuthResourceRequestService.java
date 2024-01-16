@@ -2,7 +2,7 @@ package com.rightpair.api.oauth.resource;
 
 import com.google.api.client.http.apache.v2.ApacheHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
-import com.rightpair.api.exception.OAuthRestClientException;
+import com.rightpair.api.exception.business.OAuthRestClientException;
 import com.rightpair.api.oauth.kakao.KakaoAuthorizationCodeFlow;
 import com.rightpair.api.oauth.kakao.KakaoAuthorizationCodeTokenRequest;
 import com.rightpair.api.oauth.kakao.KakaoIdToken;

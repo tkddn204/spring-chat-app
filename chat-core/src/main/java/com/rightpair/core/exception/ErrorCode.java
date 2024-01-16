@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum ErrorCode {
 
     // END POINT
+    INVALID_AUTH_ERROR("권한 에러가 발생했습니다. 서버 관리자에게 문의하세요."),
     INVALID_AUTHORIZATION_HEADER("Authorization 헤더의 형식이 올바르지 않습니다."),
     INVALID_VALIDATION("올바르지 않은 요청 형식입니다."),
 

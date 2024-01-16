@@ -1,6 +1,6 @@
 package com.rightpair.api.config;
 
-import com.rightpair.api.security.JwtExceptionFilter;
+import com.rightpair.api.security.AppAuthenticationEntryPoint;
 import com.rightpair.api.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -20,7 +20,7 @@ import org.springframework.web.cors.CorsUtils;
 public class SecurityFilterConfig {
 
     private final CorsConfigurationSource corsConfigurationSource;
-    private final JwtExceptionFilter jwtExceptionFilter;
+    private final AppAuthenticationEntryPoint appAuthenticationEntryPoint;
     private final JwtFilter jwtFilter;
 
     @Bean
@@ -30,6 +30,8 @@ public class SecurityFilterConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .rememberMe(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
+                .exceptionHandling(configurer -> configurer.authenticationEntryPoint(appAuthenticationEntryPoint))
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.authorizeHttpRequests(request ->
@@ -43,7 +45,6 @@ public class SecurityFilterConfig {
         );
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(jwtExceptionFilter, JwtFilter.class);
 
         return http.build();
     }

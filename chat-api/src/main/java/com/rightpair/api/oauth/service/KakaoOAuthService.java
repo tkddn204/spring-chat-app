@@ -1,6 +1,6 @@
 package com.rightpair.api.oauth.service;
 
-import com.rightpair.api.exception.MemberNotFoundException;
+import com.rightpair.api.exception.business.MemberNotFoundException;
 import com.rightpair.api.jwt.JwtPair;
 import com.rightpair.api.oauth.kakao.KakaoIdToken;
 import com.rightpair.api.oauth.resource.KakaoOAuthResourceRequestService;

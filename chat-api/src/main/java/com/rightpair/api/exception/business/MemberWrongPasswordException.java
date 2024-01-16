@@ -1,4 +1,4 @@
-package com.rightpair.api.exception;
+package com.rightpair.api.exception.business;
 
 import com.rightpair.core.exception.BusinessException;
 import com.rightpair.core.exception.ErrorCode;

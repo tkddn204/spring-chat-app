@@ -1,9 +1,9 @@
 package com.rightpair.api.service;
 
-import com.rightpair.api.exception.MemberAlreadyExistedException;
-import com.rightpair.api.exception.MemberNotFoundException;
-import com.rightpair.api.exception.MemberWrongPasswordException;
-import com.rightpair.api.exception.RoleNotFoundException;
+import com.rightpair.api.exception.business.MemberAlreadyExistedException;
+import com.rightpair.api.exception.business.MemberNotFoundException;
+import com.rightpair.api.exception.business.MemberWrongPasswordException;
+import com.rightpair.api.exception.business.RoleNotFoundException;
 import com.rightpair.api.jwt.JwtPair;
 import com.rightpair.api.jwt.dto.JwtPayload;
 import com.rightpair.api.jwt.service.JwtService;

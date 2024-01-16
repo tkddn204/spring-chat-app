@@ -1,5 +1,7 @@
 package com.rightpair.api.security;
 
+import com.rightpair.api.exception.filter.AppAuthenticationException;
+import com.rightpair.api.exception.business.JwtVerifyException;
 import com.rightpair.api.jwt.dto.JwtPayload;
 import com.rightpair.api.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +20,13 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String accessToken = (String) authentication.getCredentials();
-        JwtPayload jwtPayload = jwtService.verifyAccessToken(accessToken);
-        JwtPrincipal jwtPrincipal = (JwtPrincipal) jwtUserDetailsService.loadUserByUsername(jwtPayload.email());
-        return JwtAuthenticationToken.authenticated(jwtPrincipal);
+        try {
+            JwtPayload jwtPayload = jwtService.verifyAccessToken(accessToken);
+            JwtPrincipal jwtPrincipal = (JwtPrincipal) jwtUserDetailsService.loadUserByUsername(jwtPayload.email());
+            return JwtAuthenticationToken.authenticated(jwtPrincipal);
+        } catch (JwtVerifyException e) {
+            throw new AppAuthenticationException(e.getErrorCode());
+        }
     }
 
     @Override
