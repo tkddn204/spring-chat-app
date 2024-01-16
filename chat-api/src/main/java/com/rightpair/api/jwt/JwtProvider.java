@@ -2,9 +2,9 @@ package com.rightpair.api.jwt;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rightpair.api.exception.JwtVerifyException;
+import com.rightpair.api.dto.response.OAuthIdTokenPayload;
+import com.rightpair.api.exception.business.JwtVerifyException;
 import com.rightpair.api.jwt.dto.JwtPayload;
-import com.rightpair.api.service.response.OAuthIdTokenPayload;
 import com.rightpair.core.exception.ErrorCode;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

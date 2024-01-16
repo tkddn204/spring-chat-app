@@ -13,7 +13,6 @@ dependencies {
     implementation(project(":chat-core"))
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'com.google.apis:google-api-services-oauth2:v2-rev20200213-2.0.0'
 

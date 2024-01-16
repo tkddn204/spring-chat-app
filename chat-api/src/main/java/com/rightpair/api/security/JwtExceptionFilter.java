@@ -1,8 +1,8 @@
 package com.rightpair.api.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rightpair.api.exception.InvalidAuthorizationHeader;
-import com.rightpair.api.exception.JwtVerifyException;
+import com.rightpair.api.exception.filter.InvalidAuthorizationHeader;
+import com.rightpair.api.exception.business.JwtVerifyException;
 import com.rightpair.core.exception.ErrorCode;
 import com.rightpair.core.exception.ErrorMessage;
 import jakarta.servlet.FilterChain;

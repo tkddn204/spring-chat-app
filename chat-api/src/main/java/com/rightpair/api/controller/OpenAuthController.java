@@ -1,10 +1,10 @@
 package com.rightpair.api.controller;
 
-import com.rightpair.api.controller.request.OpenAuthControllerRequest;
+import com.rightpair.api.dto.request.OpenAuthControllerRequest;
+import com.rightpair.api.dto.response.AuthenticateMemberResponse;
 import com.rightpair.api.jwt.JwtPair;
 import com.rightpair.api.oauth.service.GoogleOAuthService;
 import com.rightpair.api.oauth.service.KakaoOAuthService;
-import com.rightpair.api.service.response.AuthenticateMemberResponse;
 import com.rightpair.core.exception.ErrorCode;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;

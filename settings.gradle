@@ -1,3 +1,5 @@
 rootProject.name = 'spring-chat-app'
 include 'chat-core'
 include 'chat-api'
+include 'chat-socket'
+
