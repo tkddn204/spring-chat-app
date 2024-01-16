@@ -1,12 +1,12 @@
 package com.rightpair.api.oauth.service;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.rightpair.api.dto.request.OAuthRegisterMemberRequest;
+import com.rightpair.api.dto.response.RegisterMemberResponse;
 import com.rightpair.api.exception.business.MemberNotFoundException;
 import com.rightpair.api.jwt.JwtPair;
 import com.rightpair.api.oauth.resource.GoogleOAuthResourceRequestService;
 import com.rightpair.api.service.AuthService;
-import com.rightpair.api.service.request.OAuthRegisterMemberRequest;
-import com.rightpair.api.service.response.RegisterMemberResponse;
 import com.rightpair.core.domain.member.Member;
 import com.rightpair.core.domain.member.MemberOpenAuth;
 import com.rightpair.core.repository.member.MemberOpenAuthRepository;

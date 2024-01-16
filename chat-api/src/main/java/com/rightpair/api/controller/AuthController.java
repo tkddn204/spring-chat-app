@@ -1,16 +1,12 @@
 package com.rightpair.api.controller;
 
-import com.rightpair.api.controller.request.AuthenticateMemberControllerRequest;
-import com.rightpair.api.controller.request.RefreshAccessTokenControllerRequest;
-import com.rightpair.api.controller.request.RegisterMemberControllerRequest;
+import com.rightpair.api.dto.request.*;
+import com.rightpair.api.dto.response.AuthenticateMemberResponse;
+import com.rightpair.api.dto.response.GetMemberResponse;
+import com.rightpair.api.dto.response.RegisterMemberResponse;
 import com.rightpair.api.resolver.AuthContext;
 import com.rightpair.api.security.JwtPrincipal;
 import com.rightpair.api.service.AuthService;
-import com.rightpair.api.service.request.AuthenticateMemberRequest;
-import com.rightpair.api.service.request.RegisterMemberRequest;
-import com.rightpair.api.service.response.AuthenticateMemberResponse;
-import com.rightpair.api.service.response.GetMemberResponse;
-import com.rightpair.api.service.response.RegisterMemberResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
