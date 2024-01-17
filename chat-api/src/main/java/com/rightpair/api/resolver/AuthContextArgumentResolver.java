@@ -1,6 +1,6 @@
 package com.rightpair.api.resolver;
 
-import com.rightpair.api.security.JwtPrincipal;
+import com.rightpair.api.jwt.security.JwtPrincipal;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

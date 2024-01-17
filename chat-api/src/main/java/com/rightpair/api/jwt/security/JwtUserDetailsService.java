@@ -1,4 +1,4 @@
-package com.rightpair.api.security;
+package com.rightpair.api.jwt.security;
 
 import com.rightpair.api.dto.response.GetMemberResponse;
 import com.rightpair.api.service.AuthService;

@@ -1,4 +1,4 @@
-package com.rightpair.api.security;
+package com.rightpair.api.jwt.security;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
