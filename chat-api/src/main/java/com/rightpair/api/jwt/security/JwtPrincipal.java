@@ -1,4 +1,4 @@
-package com.rightpair.api.security;
+package com.rightpair.api.jwt.security;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

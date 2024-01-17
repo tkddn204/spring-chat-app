@@ -1,7 +1,7 @@
-package com.rightpair.api.security;
+package com.rightpair.api.jwt.security;
 
-import com.rightpair.api.exception.filter.AppAuthenticationException;
 import com.rightpair.api.exception.business.JwtVerifyException;
+import com.rightpair.api.exception.filter.AppAuthenticationException;
 import com.rightpair.api.jwt.dto.JwtPayload;
 import com.rightpair.api.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;

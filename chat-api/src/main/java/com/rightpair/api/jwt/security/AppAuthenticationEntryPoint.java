@@ -1,4 +1,4 @@
-package com.rightpair.api.security;
+package com.rightpair.api.jwt.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rightpair.api.exception.filter.AppAuthenticationException;

@@ -1,7 +1,7 @@
 package com.rightpair.api.config;
 
-import com.rightpair.api.security.AppAuthenticationEntryPoint;
-import com.rightpair.api.security.JwtFilter;
+import com.rightpair.api.jwt.security.AppAuthenticationEntryPoint;
+import com.rightpair.api.jwt.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;

@@ -4,7 +4,8 @@ import com.rightpair.api.dto.request.OAuthRegisterMemberRequest;
 import com.rightpair.api.dto.response.RegisterMemberResponse;
 import com.rightpair.api.exception.business.MemberNotFoundException;
 import com.rightpair.api.jwt.JwtPair;
-import com.rightpair.api.oauth.kakao.KakaoIdToken;
+import com.rightpair.api.oauth.kakao.KakaoTokenPairResponse;
+import com.rightpair.api.oauth.kakao.KakaoUserInfoResponse;
 import com.rightpair.api.oauth.resource.KakaoOAuthResourceRequestService;
 import com.rightpair.api.service.AuthService;
 import com.rightpair.core.domain.member.Member;
@@ -27,13 +28,15 @@ public class KakaoOAuthService implements OAuthService {
 
     @Override
     public JwtPair provideMemberJwtByOAuthCode(String code) {
-        KakaoIdToken kakaoIdToken = kakaoOAuthResourceRequestService.getKakaoIdToken(code);
+        KakaoTokenPairResponse kakaoTokenPair = kakaoOAuthResourceRequestService.getKakaoTokenPair(code);
+        KakaoUserInfoResponse kakaoUserInfoResponse = kakaoOAuthResourceRequestService.getKakaoUserInfo(kakaoTokenPair);
+
         Optional<MemberOpenAuth> memberOpenAuth =
-                memberOpenAuthRepository.findByMemberEmail(kakaoIdToken.getPayload().getEmail());
+                memberOpenAuthRepository.findByMemberEmail(kakaoUserInfoResponse.kakaoAccount().email());
 
         if (memberOpenAuth.isEmpty()) {
             RegisterMemberResponse registerMemberResponse = authService.oAuthRegisterMember(
-                    OAuthRegisterMemberRequest.from(kakaoIdToken, OauthProvider.KAKAO.name()));
+                    OAuthRegisterMemberRequest.from(kakaoUserInfoResponse, OauthProvider.KAKAO.name()));
             return JwtPair.create(registerMemberResponse.accessToken(), registerMemberResponse.refreshToken());
         } else {
             Member member = memberRepository.findById(memberOpenAuth.get().getId())

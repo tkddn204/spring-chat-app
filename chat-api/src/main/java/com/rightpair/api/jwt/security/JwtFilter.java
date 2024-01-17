@@ -1,4 +1,4 @@
-package com.rightpair.api.security;
+package com.rightpair.api.jwt.security;
 
 import com.rightpair.api.exception.filter.AppAuthenticationException;
 import jakarta.servlet.FilterChain;

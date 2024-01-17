@@ -1,6 +1,6 @@
 package com.rightpair.api.config;
 
-import com.rightpair.api.security.JwtFilter;
+import com.rightpair.api.jwt.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

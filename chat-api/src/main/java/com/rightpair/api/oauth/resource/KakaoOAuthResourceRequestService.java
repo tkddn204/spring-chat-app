@@ -1,23 +1,32 @@
 package com.rightpair.api.oauth.resource;
 
-import com.google.api.client.http.apache.v2.ApacheHttpTransport;
-import com.google.api.client.json.gson.GsonFactory;
 import com.rightpair.api.exception.business.OAuthRestClientException;
-import com.rightpair.api.oauth.kakao.KakaoAuthorizationCodeFlow;
-import com.rightpair.api.oauth.kakao.KakaoAuthorizationCodeTokenRequest;
-import com.rightpair.api.oauth.kakao.KakaoIdToken;
-import com.rightpair.api.oauth.kakao.KakaoTokenResponse;
+import com.rightpair.api.oauth.kakao.KakaoTokenPairRequest;
+import com.rightpair.api.oauth.kakao.KakaoTokenPairResponse;
+import com.rightpair.api.oauth.kakao.KakaoUserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Arrays;
-import java.util.List;
+import java.net.URI;
 
 @RequiredArgsConstructor
 @Service
 public class KakaoOAuthResourceRequestService {
-    private static final List<String> KAKAO_SCOPES = Arrays.asList("openid", "profile_image", "profile_nickname", "account_email");
+
+    @Value("${service.oauth.kakao.user-info-url}")
+    private String kakaoUserInfoURL;
+
+    @Value("${service.oauth.kakao.token-url}")
+    private String kakaoTokenURL;
 
     @Value("${service.oauth.kakao.client-id}")
     private String kakaoOAuthClientId;
@@ -29,20 +38,57 @@ public class KakaoOAuthResourceRequestService {
     private String kakaoOauthRedirectURI;
 
 
-    public KakaoIdToken getKakaoIdToken(String code) {
+    public KakaoTokenPairResponse getKakaoTokenPair(String code) {
         try {
-            KakaoAuthorizationCodeFlow flow = new KakaoAuthorizationCodeFlow.Builder(
-                    new ApacheHttpTransport(),
-                    GsonFactory.getDefaultInstance(),
+            RestTemplate restTemplate = new RestTemplate();
+
+            URI kakaoUri = UriComponentsBuilder
+                    .fromUriString(kakaoTokenURL)
+                    .encode()
+                    .build().toUri();
+
+            KakaoTokenPairRequest request = KakaoTokenPairRequest.from(
                     kakaoOAuthClientId,
                     kakaoOAuthClientSecret,
-                    KAKAO_SCOPES).build();
+                    kakaoOauthRedirectURI,
+                    code
+            );
 
-            KakaoAuthorizationCodeTokenRequest request = flow.newTokenRequest(code);
-            request.setRedirectUri(kakaoOauthRedirectURI);
-            KakaoTokenResponse kakaoTokenResponse = request.execute();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-            return kakaoTokenResponse.parseIdToken();
+            MultiValueMap<String, String> requestMap = new LinkedMultiValueMap<>();
+            requestMap.add("grant_type", request.grantType());
+            requestMap.add("client_id", request.clientId());
+            requestMap.add("client_secret", request.clientSecret());
+            requestMap.add("redirect_uri", request.redirectUri());
+            requestMap.add("code", request.code());
+
+            HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(requestMap, headers);
+            return restTemplate.postForEntity(kakaoUri, httpEntity, KakaoTokenPairResponse.class).getBody();
+        } catch (Exception e) {
+            throw new OAuthRestClientException(e.getMessage());
+        }
+    }
+
+    public KakaoUserInfoResponse getKakaoUserInfo(KakaoTokenPairResponse kakaoIdToken) {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+
+            URI kakaoUri = UriComponentsBuilder
+                    .fromUriString(kakaoUserInfoURL)
+                    .encode()
+                    .build().toUri();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setBearerAuth(kakaoIdToken.accessToken());
+
+            return restTemplate.exchange(kakaoUri,
+                            HttpMethod.GET,
+                            new HttpEntity<>(headers),
+                            KakaoUserInfoResponse.class)
+                    .getBody();
         } catch (Exception e) {
             throw new OAuthRestClientException(e.getMessage());
         }
