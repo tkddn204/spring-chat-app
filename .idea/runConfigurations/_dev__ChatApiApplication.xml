@@ -1,6 +1,5 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="(dev) ChatApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <option name="ACTIVE_PROFILES" value="dev" />
     <module name="spring-chat-app.chat-api.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.rightpair.api.ChatApiApplication" />
     <extension name="net.ashald.envfile">

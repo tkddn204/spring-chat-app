@@ -2,7 +2,7 @@ package com.rightpair.api.dto.request;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.rightpair.api.dto.response.OAuthIdTokenPayload;
-import com.rightpair.api.oauth.kakao.KakaoIdToken;
+import com.rightpair.api.oauth.kakao.KakaoUserInfoResponse;
 
 import java.util.UUID;
 
@@ -34,14 +34,13 @@ public record OAuthRegisterMemberRequest(
         );
     }
 
-    public static OAuthRegisterMemberRequest from(KakaoIdToken kakaoIdToken, String provider) {
-        KakaoIdToken.Payload payload = kakaoIdToken.getPayload();
+    public static OAuthRegisterMemberRequest from(KakaoUserInfoResponse kakaoUserInfoResponse, String provider) {
         return new OAuthRegisterMemberRequest(
-                payload.getEmail(),
+                kakaoUserInfoResponse.kakaoAccount().email(),
                 UUID.randomUUID().toString(),
-                (String) payload.get("nickname"),
+                kakaoUserInfoResponse.kakaoAccount().profile().nickname(),
                 provider,
-                payload.getSubject()
+                kakaoUserInfoResponse.id()
         );
     }
 }
