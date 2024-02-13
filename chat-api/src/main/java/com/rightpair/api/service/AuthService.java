@@ -100,7 +100,9 @@ public class AuthService {
     public AuthenticateMemberResponse refreshAccessToken(String refreshToken) {
         JwtPayload jwtPayload = jwtService.verifyRefreshToken(refreshToken);
 
-        memberAuthTokenRepository.findByMemberId(Long.valueOf(jwtPayload.id()));
+        if (!memberAuthTokenRepository.existsByMemberId(Long.valueOf(jwtPayload.id()))) {
+            throw new MemberNotFoundException();
+        }
 
         return AuthenticateMemberResponse.fromJwtPair(jwtService.refreshAccessToken(refreshToken, jwtPayload));
     }

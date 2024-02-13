@@ -15,4 +15,6 @@ public interface MemberAuthTokenRepository extends JpaRepository<MemberAuthToken
     List<MemberAuthToken> findAllByExpiredAtIsAfter(LocalDateTime date);
 
     Optional<MemberAuthToken> findByMemberId(Long memberId);
+
+    boolean existsByMemberId(Long memberId);
 }

@@ -44,8 +44,7 @@ public class AuthController {
             @AuthContext JwtPrincipal jwtPrincipal
     ) {
         authService.unAuthenticateMember(Long.valueOf(jwtPrincipal.getMemberId()));
-        return ResponseEntity.noContent()
-                .build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/info")
